@@ -1,6 +1,6 @@
 {
   // This is an alias to @tsconfig/node12: https://github.com/tsconfig/bases
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node16/tsconfig.json",
 
   // Most ts-node options can be specified here using their programmatic names.
   "ts-node": {
@@ -43,7 +43,10 @@
     "moduleDetection": "force",
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
     "paths": {
-      "#modules/*": ["src/modules/*"]
+      "#convertors/*": ["src/convertors/*"],
+      "#generators/*": ["src/generators/*"],
+      "#interfaces/*": ["src/interfaces/*"],
+      "#tools/*": ["src/tools/*"]
     },
     "rootDir": ".",
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
@@ -53,6 +56,6 @@
     "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
     "pretty": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["dist/**", ".configs/**"]
+  "include": ["src/**/*.ts", "Untitled-1.ts"],
+  "exclude": ["dist/**", ".configs/**", "vitest.config.ts"]
 }

@@ -46,6 +46,46 @@ module.exports = {
     // static function use this: void
     '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
     '@typescript-eslint/no-unnecessary-boolean-literal-compare': ['off'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^I[A-Z]+',
+          match: true,
+        },
+      },
+      {
+        selector: 'typeAlias',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^T[A-Z]+',
+          match: true,
+        },
+      },
+    ],
+    '@typescript-eslint/member-delimiter-style': [
+      'off',
+      {
+        multiline: {
+          delimiter: 'none',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+      },
+    ],
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSEnumDeclaration:not([const=true])',
+        message: "Don't declare non-const enums",
+      },
+    ],
   },
   overrides: [
     {
