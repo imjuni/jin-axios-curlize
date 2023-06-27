@@ -1,6 +1,6 @@
 {
   "name": "jin-axios-curlize",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "description": "jin-axios-curlize",
   "engines": {
     "node": ">=16"
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imjuni/typescript-cli-boilerplate.git"
+    "url": "git+https://github.com/imjuni/jin-axios-curlize.git"
   },
   "keywords": [],
   "author": "ByungJoon Lee",
@@ -48,9 +48,9 @@
   },
   "files": ["dist"],
   "bugs": {
-    "url": "https://github.com/imjuni/typescript-cli-boilerplate/issues"
+    "url": "https://github.com/imjuni/jin-axios-curlize.git/issues"
   },
-  "homepage": "https://github.com/imjuni/typescript-cli-boilerplate#readme",
+  "homepage": "https://github.com/imjuni/jin-axios-curlize.git#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-terser": "^0.4.3",
@@ -101,7 +101,7 @@
     "axios": "^1.4.0",
     "fast-safe-stringify": "^2.1.1",
     "form-data": "^4.0.0",
-    "my-easy-fp": "^0.20.3"
+    "my-easy-fp": "^0.21.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": ["cross-env NODE_ENV=production eslint --cache"],

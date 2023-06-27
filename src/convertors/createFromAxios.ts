@@ -26,7 +26,7 @@ export default function createFromAxios(
         url.pathname,
       ].join('')}${generateQuerystring(url, options, req.params)}'`,
     ],
-    [options.disableFollowRedirect ?? false ? '--location' : undefined],
+    [options.disableFollowRedirect ?? true ? undefined : '--location'],
     generateHeader(req.headers, options),
     generateBody(getBody(req, options), options),
   ]

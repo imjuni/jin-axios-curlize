@@ -125,7 +125,7 @@ describe('create-from-axios', () => {
           'Content-Type': CE_FORM_CONTENT_TYPE.JSON,
         },
       },
-      { prettify: false, disableFollowRedirect: true },
+      { prettify: false, disableFollowRedirect: false },
     );
 
     expect(r01).toEqual(
