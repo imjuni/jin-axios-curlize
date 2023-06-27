@@ -20,7 +20,6 @@ module.exports = {
     project: ['tsconfig.eslint.json'],
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['coverage/**', 'dist/**', '__test__/**', '__tests__/**'],
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
     'max-len': [
