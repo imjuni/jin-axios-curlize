@@ -9,10 +9,9 @@ import getIndent from '#tools/getIndent';
 import getNewline from '#tools/getNewline';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function createFromAxios(
+export default function createFromAxios<T = unknown>(
   req: Pick<AxiosRequestConfig, 'url' | 'method' | 'headers' | 'data' | 'baseURL' | 'params'>,
-
-  options: ICurlizeOptions,
+  options: ICurlizeOptions<T>,
 ): string {
   const url = getUrl(req.url ?? '', req.baseURL);
 
@@ -28,7 +27,7 @@ export default function createFromAxios(
     ],
     [options.disableFollowRedirect ?? true ? undefined : '--location'],
     generateHeader(req.headers, options),
-    generateBody(getBody(req, options), options),
+    generateBody(req.headers, getBody(req, options), options),
   ]
     .flat()
     .filter((element) => element != null);

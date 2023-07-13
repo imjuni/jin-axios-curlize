@@ -1,22 +1,37 @@
 import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
-import type { JSONValue } from '#interfaces/JSONValue';
 import getIndent from '#tools/getIndent';
 import shellescape from '#tools/shellescape';
+import type { AxiosRequestConfig } from 'axios';
 import fastSafeStringify from 'fast-safe-stringify';
 
-export default function generateBody(
-  body: { form: boolean; data?: JSONValue },
-  options: ICurlizeOptions,
+export default function generateBody<T = unknown>(
+  httpHeaders: AxiosRequestConfig['headers'],
+  body: { form: boolean; data?: T },
+  options: ICurlizeOptions<T>,
 ): string[] {
   const { data } = body;
 
-  if (data == null) {
+  const replacer = (bodyData?: T) => {
+    if (options.replacer?.body != null) {
+      try {
+        return options.replacer.body(httpHeaders, bodyData);
+      } catch {
+        return bodyData;
+      }
+    }
+
+    return bodyData;
+  };
+
+  const replaced = replacer(data);
+
+  if (replaced == null) {
     return [];
   }
 
   // application/x-www-form-urlencoded 방식인가 아닌가
   if (body.form) {
-    return Object.entries(data)
+    return Object.entries(replaced)
       .map<[string, string][]>(([key, values]) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return Array.isArray(values) ? values.map((value) => [key, value]) : [[key, values]];
