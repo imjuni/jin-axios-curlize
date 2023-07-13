@@ -4,9 +4,9 @@ import { CE_FORM_CONTENT_TYPE } from '#interfaces/CE_FORM_CONTENT_TYPE';
 import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function getDefaultMultipartFormTransformer(
+export default function getDefaultMultipartFormTransformer<T = unknown>(
   req: Pick<AxiosRequestConfig, 'data' | 'headers'>,
-  options: ICurlizeOptions,
+  options: ICurlizeOptions<T>,
 ) {
   const contentType = getContentType(req.headers);
 

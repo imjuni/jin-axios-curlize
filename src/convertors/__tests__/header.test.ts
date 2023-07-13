@@ -134,6 +134,37 @@ describe('generate-header', () => {
     ]);
   });
 
+  it('replacer-string[] + exception+type+array', () => {
+    const header = generateHeader(
+      {
+        host: 'http://localhost',
+        'content-type': 'application/x-www-form-urlencoded',
+        'access-token': 'Bearer i-am-access-token',
+        referers: ['http://site1', 'http://site2'],
+        user: undefined,
+      },
+      {
+        prettify: false,
+        replacer: {
+          header: (arg: AxiosRequestConfig['headers']) => {
+            if (arg != null) {
+              throw new Error('invalid data');
+            }
+
+            return arg;
+          },
+        },
+      },
+    );
+
+    expect(header).toEqual([
+      `--header 'content-type: application/x-www-form-urlencoded'`,
+      `--header 'access-token: Bearer i-am-access-token'`,
+      `--header 'referers: http://site1,http://site2'`,
+      `--header 'user:  '`,
+    ]);
+  });
+
   it('replacer-undefined', () => {
     const header = generateHeader(
       {
@@ -142,7 +173,11 @@ describe('generate-header', () => {
       {
         prettify: false,
         replacer: {
-          header: (_arc: AxiosRequestConfig['headers']) => {
+          header: (arg: AxiosRequestConfig['headers']) => {
+            if (arg == null) {
+              throw new Error('invalid data');
+            }
+
             return undefined;
           },
         },

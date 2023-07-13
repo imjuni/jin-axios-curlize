@@ -1,9 +1,11 @@
 import type { AxiosRequestConfig } from 'axios';
 
+export type TBodyReplacerType<T = unknown> = (header: AxiosRequestConfig['headers'], data?: T) => T;
+
 /**
  * Generate Option
  */
-export default interface ICurlizeOptions {
+export default interface ICurlizeOptions<T = unknown> {
   /**
    * prettify command. use newline charactor
    * */
@@ -25,6 +27,6 @@ export default interface ICurlizeOptions {
   replacer?: {
     querystring?: (qs: URLSearchParams) => URLSearchParams;
     header?: (arc: AxiosRequestConfig['headers']) => AxiosRequestConfig['headers'];
-    body?: <T = unknown>(header: AxiosRequestConfig['headers'], data: T) => T;
+    body?: TBodyReplacerType<T>;
   };
 }

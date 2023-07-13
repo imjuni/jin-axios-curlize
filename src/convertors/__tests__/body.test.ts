@@ -3,6 +3,8 @@ import getContentType from '#convertors/getContentType';
 import getDefaultMultipartFormTransformer from '#convertors/getDefaultMultipartFormTransformer';
 import generateBody from '#generators/generateBody';
 import { CE_FORM_CONTENT_TYPE } from '#interfaces/CE_FORM_CONTENT_TYPE';
+import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
+import type { TBodyReplacerType } from '#interfaces/ICurlizeOptions';
 import pickContentType from '#tools/pickContentType';
 import NodeFormData from 'form-data';
 
@@ -143,6 +145,7 @@ describe('get-body', () => {
 describe('generateBody', () => {
   it('json-body', () => {
     const body = generateBody(
+      {},
       {
         form: false,
         data: { name: 'ironman', ability: ['energy repulsor', 'supersonic flight'] },
@@ -159,6 +162,7 @@ describe('generateBody', () => {
 
   it('form-body', () => {
     const body = generateBody(
+      {},
       {
         form: true,
         data: { name: 'ironman', ability: ['energy repulsor', 'supersonic flight'] },
@@ -175,8 +179,73 @@ describe('generateBody', () => {
     ]);
   });
 
+  it('form-body + replacer', () => {
+    const bodyReplacer: TBodyReplacerType<Record<string, string | string[]>> = (_header, data) => {
+      const next = { ...data };
+      next.name = 'hello';
+      return next;
+    };
+
+    const option: ICurlizeOptions<Record<string, string | string[]>> = {
+      prettify: false,
+      replacer: {
+        body: bodyReplacer,
+      },
+    };
+
+    const body = generateBody(
+      {},
+      {
+        form: true,
+        data: { name: 'ironman', ability: ['energy repulsor', 'supersonic flight'] },
+      },
+      option,
+    );
+
+    expect(body).toMatchObject([
+      `--data name='hello'`,
+      `--data ability='energy repulsor'`,
+      `--data ability='supersonic flight'`,
+    ]);
+  });
+
+  it('form-body + replacer + exception', () => {
+    const bodyReplacer: TBodyReplacerType<Record<string, string | string[]>> = (_header, data) => {
+      const next = { ...data };
+
+      if (data != null) {
+        throw new Error('invalid data');
+      }
+
+      return next;
+    };
+
+    const option: ICurlizeOptions<Record<string, string | string[]>> = {
+      prettify: false,
+      replacer: {
+        body: bodyReplacer,
+      },
+    };
+
+    const body = generateBody(
+      {},
+      {
+        form: true,
+        data: { name: 'ironman', ability: ['energy repulsor', 'supersonic flight'] },
+      },
+      option,
+    );
+
+    expect(body).toMatchObject([
+      `--data name='ironman'`,
+      `--data ability='energy repulsor'`,
+      `--data ability='supersonic flight'`,
+    ]);
+  });
+
   it('undefined-body', () => {
     const body = generateBody(
+      {},
       {
         form: true,
         data: undefined,

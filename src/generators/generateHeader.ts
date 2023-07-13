@@ -4,32 +4,43 @@ import defaultHeaderFilterItems from '#tools/defaultHeaderFilterItems';
 import getIndent from '#tools/getIndent';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function generateHeader(
+export default function generateHeader<T = unknown>(
   httpHeaders: AxiosRequestConfig['headers'],
-  options: ICurlizeOptions,
+  options: ICurlizeOptions<T>,
 ): string[] | undefined {
   const replacer = (
     headers: AxiosRequestConfig['headers'],
   ): NonNullable<AxiosRequestConfig['headers']> => {
-    if (headers == null) {
-      return {};
-    }
+    const processDefaultHeader = () => {
+      if (headers == null) {
+        return {};
+      }
+
+      const replaced = Object.entries(headers)
+        .map(([key, value]): { key: string; value: unknown } => ({ key, value: value as unknown }))
+        .filter(
+          (entry) =>
+            !(defaultHeaderFilterItems as readonly string[]).includes(
+              entry.key.trim().toLowerCase(),
+            ),
+        )
+        .reduce<AxiosRequestConfig['headers']>((agg, entry) => {
+          return { ...agg, [entry.key]: entry.value };
+        }, {});
+
+      return replaced!;
+    };
 
     if (options.replacer?.header != null) {
-      return options.replacer.header(headers) ?? {};
+      try {
+        return options.replacer.header(headers) ?? {};
+      } catch {
+        return processDefaultHeader();
+      }
     }
 
-    const replaced = Object.entries(headers)
-      .map(([key, value]): { key: string; value: unknown } => ({ key, value: value as unknown }))
-      .filter(
-        (entry) =>
-          !(defaultHeaderFilterItems as readonly string[]).includes(entry.key.trim().toLowerCase()),
-      )
-      .reduce<AxiosRequestConfig['headers']>((agg, entry) => {
-        return { ...agg, [entry.key]: entry.value };
-      }, {});
-
-    return replaced!;
+    const replaced = processDefaultHeader();
+    return replaced;
   };
 
   const replaced = replacer(httpHeaders);

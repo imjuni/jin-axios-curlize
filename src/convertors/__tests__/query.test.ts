@@ -43,6 +43,32 @@ describe('generate-querystring', () => {
       '?name=ironman&ability=energy%20repulsor&tid=11111111-2222-43DA-8833-D0A7FF05D17C',
     );
   });
+
+  it('replacer-querystring + exception', () => {
+    const e = `${'https://localhost:1234'}?name=ironman&ability=${encodeURIComponent(
+      'energy repulsor',
+    )}&tid=19F88B5E-82E5-43DA-8833-D0A7FF05D17C`;
+    const url = new URL(e);
+
+    const qs = generateQuerystring(url, {
+      prettify: true,
+      replacer: {
+        querystring: (sp) => {
+          const next = new URLSearchParams(sp);
+
+          if (Array.from(next.keys()).length > 0) {
+            throw new Error('unknown error');
+          }
+
+          return next;
+        },
+      },
+    });
+
+    expect(qs).toEqual(
+      '?name=ironman&ability=energy repulsor&tid=19F88B5E-82E5-43DA-8833-D0A7FF05D17C',
+    );
+  });
 });
 
 describe('mergeQuerytstringParams', () => {
