@@ -4,7 +4,7 @@
  * @param inp
  * @returns
  */
-export default function shellescape(inp: string[]): string {
+export function shellescape(inp: string[]): string {
   const ret = inp.map((item: string) => {
     let next = item;
 

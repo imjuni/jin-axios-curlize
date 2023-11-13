@@ -1,4 +1,4 @@
-import getFormData from '#convertors/getFormData';
+import { getFormData } from '#/convertors/getFormData';
 import NodeFormData from 'form-data';
 import { describe, expect, it } from 'vitest';
 

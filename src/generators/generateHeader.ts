@@ -1,17 +1,17 @@
-import getContentType from '#convertors/getContentType';
-import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
-import defaultHeaderFilterItems from '#tools/defaultHeaderFilterItems';
-import getIndent from '#tools/getIndent';
+import { getContentType } from '#/convertors/getContentType';
+import type { ICurlizeOptions } from '#/interfaces/ICurlizeOptions';
+import { defaultHeaderFilterItems } from '#/tools/defaultHeaderFilterItems';
+import { getIndent } from '#/tools/getIndent';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function generateHeader<T = unknown>(
+export function generateHeader<T = unknown>(
   httpHeaders: AxiosRequestConfig['headers'],
   options: ICurlizeOptions<T>,
 ): string[] | undefined {
   const replacer = (
     headers: AxiosRequestConfig['headers'],
   ): NonNullable<AxiosRequestConfig['headers']> => {
-    const processDefaultHeader = () => {
+    const processDefaultHeader = (): NonNullable<AxiosRequestConfig['headers']> => {
       if (headers == null) {
         return {};
       }
@@ -24,11 +24,11 @@ export default function generateHeader<T = unknown>(
               entry.key.trim().toLowerCase(),
             ),
         )
-        .reduce<AxiosRequestConfig['headers']>((agg, entry) => {
-          return { ...agg, [entry.key]: entry.value };
+        .reduce<NonNullable<AxiosRequestConfig['headers']>>((agg, entry) => {
+          return { ...agg, [entry.key]: entry.value } as NonNullable<AxiosRequestConfig['headers']>;
         }, {});
 
-      return replaced!;
+      return replaced;
     };
 
     if (options.replacer?.header != null) {

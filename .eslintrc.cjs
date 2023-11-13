@@ -101,10 +101,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['jest.config.cjs'],
+      files: ['**/CE_*.ts'],
       rules: {
-        '@typescript-eslint/no-unsafe-argument': ['off'],
-        '@typescript-eslint/no-unsafe-member-access': ['off'],
+        '@typescript-eslint/no-redeclare': ['off'],
+        '@typescript-eslint/naming-convention': ['off'],
       },
     },
     {

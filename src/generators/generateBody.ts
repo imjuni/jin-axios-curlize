@@ -1,10 +1,10 @@
-import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
-import getIndent from '#tools/getIndent';
-import shellescape from '#tools/shellescape';
+import type { ICurlizeOptions } from '#/interfaces/ICurlizeOptions';
+import { getIndent } from '#/tools/getIndent';
+import { shellescape } from '#/tools/shellescape';
 import type { AxiosRequestConfig } from 'axios';
 import fastSafeStringify from 'fast-safe-stringify';
 
-export default function generateBody<T = unknown>(
+export function generateBody<T = unknown>(
   httpHeaders: AxiosRequestConfig['headers'],
   body: { form: boolean; data?: T },
   options: ICurlizeOptions<T>,

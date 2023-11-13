@@ -1,5 +1,3 @@
-import {} from 'my-easy-fp';
-
 function removeStartSlash(input: string): string {
   if (input.startsWith('/')) {
     return input;
@@ -8,7 +6,7 @@ function removeStartSlash(input: string): string {
   return `/${input}`;
 }
 
-export default function getUrl(input: string, base?: string): URL {
+export function getUrl(input: string, base?: string): URL {
   if (input === '' && base == null) {
     throw new Error('invalid url');
   }

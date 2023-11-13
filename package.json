@@ -13,12 +13,15 @@
     "ctix": "ctix build --config .configs/.ctirc",
     "ctix-rm": "ctix remove --config ./.configs/.ctirc --force-yes --remove-backup",
     "build": "pnpm run clean && tsc -p tsconfig.prod.json",
-    "prepack:dev": "pnpm run build && run-s clean ctix:single",
-    "pack:dev": "NODE_ENV=production rollup --config .configs/rollup.config.dev.ts --configPlugin typescript",
-    "prepack:prod": "run-p build && run-s clean ctix:single",
-    "pack:prod": "NODE_ENV=production rollup --config .configs/rollup.config.prod.ts --configPlugin typescript",
-    "postpack:prod": "run-s ctix:remove clean:dts",
-    "clean:dts": "rimraf dist/cjs/src dist/esm/src",
+    "esbuild-cjs": "FORMAT=cjs node .configs/esbuild.mjs",
+    "esbuild-esm": "FORMAT=esm node .configs/esbuild.mjs",
+    "dts": "tsc -p tsconfig.dts.json",
+    "dts-alias": "tsc-alias -p tsconfig.dts.json",
+    "dts-gen": "rollup --config ./.configs/rollup.config.mjs",
+    "dts-pack": "run-s dts dts-alias dts-gen",
+    "dts-rm": "rimraf dist/types/origin",
+    "bundle-pack": "run-p esbuild-cjs esbuild-esm dts-pack",
+    "bundle": "run-s clean ctix bundle-pack ctix-rm dts-rm",
     "pub": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --registry http://localhost:8901",
     "unpub": "pnpm unpublish $npm_package_name@$npm_package_version --registry http://localhost:8901 --force",
     "pub:prod": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --access=public",
@@ -44,9 +47,7 @@
       "typings": "./dist/esm/index.d.mts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "bugs": {
     "url": "https://github.com/imjuni/jin-axios-curlize.git/issues"
   },
@@ -62,6 +63,7 @@
     "cross-env": "^7.0.3",
     "ctix": "^2.1.0",
     "deps-diff": "^1.0.2",
+    "esbuild": "^0.19.5",
     "eslint": "^8.43.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -84,6 +86,7 @@
     "rollup": "^4.4.0",
     "rollup-plugin-dts": "^6.1.0",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.5.3",
     "typescript": "^5.2.2",
@@ -97,9 +100,7 @@
     "my-easy-fp": "^0.21.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "cross-env NODE_ENV=production eslint --cache"
-    ],
+    "*.{js,jsx,ts,tsx}": ["cross-env NODE_ENV=production eslint --cache"],
     "*.{js,jsx,ts,tsx},*.json,.{eslintrc.cjs,prettierrc}": [
       "cross-env NODE_ENV=production prettier --ignore-path .eslintignore --parser json --write"
     ]
