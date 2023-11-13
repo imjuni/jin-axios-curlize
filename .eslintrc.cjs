@@ -20,8 +20,12 @@ module.exports = {
     project: ['tsconfig.eslint.json'],
     tsconfigRootDir: __dirname,
   },
+  ignorePatterns: ['coverage/**', 'dist/**', '__test__/**', '__tests__/**'],
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
+    // ----------------------------------------------------------------------------------------------------------
+    // eslint
+    // ----------------------------------------------------------------------------------------------------------
     'max-len': [
       'error',
       {
@@ -33,18 +37,17 @@ module.exports = {
         code: 120,
       },
     ],
-    '@typescript-eslint/no-unused-vars': [
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-restricted-syntax': [
       'error',
       {
-        varsIgnorePattern: '^_.+$',
-        argsIgnorePattern: '^_.+$',
+        selector: 'TSEnumDeclaration:not([const=true])',
+        message: "Don't declare non-const enums",
       },
     ],
-    'import/extensions': ['off'],
-    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-    // static function use this: void
-    '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
-    '@typescript-eslint/no-unnecessary-boolean-literal-compare': ['off'],
+    // ----------------------------------------------------------------------------------------------------------
+    // @typescript-eslint
+    // ----------------------------------------------------------------------------------------------------------
     '@typescript-eslint/naming-convention': [
       'error',
       {
@@ -77,14 +80,24 @@ module.exports = {
         },
       },
     ],
-    'no-underscore-dangle': ['error', { allowAfterThis: true }],
-    'no-restricted-syntax': [
+    '@typescript-eslint/no-unused-vars': [
       'error',
       {
-        selector: 'TSEnumDeclaration:not([const=true])',
-        message: "Don't declare non-const enums",
+        varsIgnorePattern: '^_.+$',
+        argsIgnorePattern: '^_.+$',
       },
     ],
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+      },
+    ],
+    // ----------------------------------------------------------------------------------------------------------
+    // eslint-plugin-import
+    // ----------------------------------------------------------------------------------------------------------
+    'import/prefer-default-export': ['off'],
+    'import/no-default-export': ['error'],
   },
   overrides: [
     {
