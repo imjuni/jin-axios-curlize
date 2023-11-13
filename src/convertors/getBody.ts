@@ -1,10 +1,10 @@
-import getContentType from '#convertors/getContentType';
-import getDefaultMultipartFormTransformer from '#convertors/getDefaultMultipartFormTransformer';
-import { CE_FORM_CONTENT_TYPE } from '#interfaces/CE_FORM_CONTENT_TYPE';
-import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
+import { getContentType } from '#/convertors/getContentType';
+import { getDefaultMultipartFormTransformer } from '#/convertors/getDefaultMultipartFormTransformer';
+import { CE_FORM_CONTENT_TYPE } from '#/interfaces/CE_FORM_CONTENT_TYPE';
+import type { ICurlizeOptions } from '#/interfaces/ICurlizeOptions';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function getBody<T = unknown>(
+export function getBody<T = unknown>(
   req: Pick<AxiosRequestConfig, 'data' | 'headers'>,
   options: ICurlizeOptions<T>,
 ): { form: boolean; data?: T } {

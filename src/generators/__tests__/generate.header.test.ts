@@ -1,5 +1,5 @@
-import generateHeader from '#generators/generateHeader';
-import defaultHeaderFilterItems from '#tools/defaultHeaderFilterItems';
+import { generateHeader } from '#/generators/generateHeader';
+import { defaultHeaderFilterItems } from '#/tools/defaultHeaderFilterItems';
 import type { AxiosRequestConfig } from 'axios';
 import { describe, expect, it } from 'vitest';
 

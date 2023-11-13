@@ -1,6 +1,6 @@
-import getMethod from '#convertors/request-config/getMethod';
-import getUrl from '#convertors/request-config/getUrl';
-import getIndent from '#tools/getIndent';
+import { getMethod } from '#/convertors/request-config/getMethod';
+import { getUrl } from '#/convertors/request-config/getUrl';
+import { getIndent } from '#/tools/getIndent';
 import { describe, expect, it } from 'vitest';
 
 describe('getMethod', () => {

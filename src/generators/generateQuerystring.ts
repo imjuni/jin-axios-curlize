@@ -1,7 +1,7 @@
-import mergeQuerytstringParams from '#convertors/mergeQuerystringParams';
-import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
+import { mergeQuerytstringParams } from '#/convertors/mergeQuerystringParams';
+import type { ICurlizeOptions } from '#/interfaces/ICurlizeOptions';
 
-export default function generateQuerystring<T = unknown>(
+export function generateQuerystring<T = unknown>(
   url: URL,
   options: ICurlizeOptions<T>,
   params?: unknown,

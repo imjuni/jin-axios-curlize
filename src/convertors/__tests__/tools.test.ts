@@ -1,5 +1,5 @@
-import getIndent from '#tools/getIndent';
-import getNewline from '#tools/getNewline';
+import { getIndent } from '#/tools/getIndent';
+import { getNewline } from '#/tools/getNewline';
 import { describe, expect, it } from 'vitest';
 
 describe('getIndent', () => {

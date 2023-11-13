@@ -1,6 +1,6 @@
 import type NodeFormData from 'form-data';
 
-export default function getFormData(formData: unknown): Record<string, string> {
+export function getFormData(formData: unknown): Record<string, string> {
   if ('getHeaders' in (formData as NodeFormData)) {
     return {};
   }

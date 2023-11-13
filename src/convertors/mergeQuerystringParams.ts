@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 
-export default function mergeQuerytstringParams(url: URL, params: AxiosRequestConfig['params']) {
+export function mergeQuerytstringParams(url: URL, params: AxiosRequestConfig['params']) {
   if (params instanceof URLSearchParams) {
     const nextSp = new URLSearchParams([...params.entries(), ...url.searchParams.entries()]);
 

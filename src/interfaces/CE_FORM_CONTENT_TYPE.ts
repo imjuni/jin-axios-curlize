@@ -4,5 +4,4 @@ export const CE_FORM_CONTENT_TYPE = {
   JSON: 'application/json',
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare, @typescript-eslint/naming-convention
-export type CE_FORM_CONTENT_TYPE = typeof CE_FORM_CONTENT_TYPE[keyof typeof CE_FORM_CONTENT_TYPE];
+export type CE_FORM_CONTENT_TYPE = (typeof CE_FORM_CONTENT_TYPE)[keyof typeof CE_FORM_CONTENT_TYPE];

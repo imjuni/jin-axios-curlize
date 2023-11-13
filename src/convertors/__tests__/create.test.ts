@@ -1,5 +1,5 @@
-import createFromAxios from '#convertors/createFromAxios';
-import { CE_FORM_CONTENT_TYPE } from '#interfaces/CE_FORM_CONTENT_TYPE';
+import { createFromAxios } from '#/convertors/createFromAxios';
+import { CE_FORM_CONTENT_TYPE } from '#/interfaces/CE_FORM_CONTENT_TYPE';
 import NodeFormData from 'form-data';
 import { describe, expect, it } from 'vitest';
 

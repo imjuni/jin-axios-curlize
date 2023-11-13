@@ -5,7 +5,7 @@ export type TBodyReplacerType<T = unknown> = (header: AxiosRequestConfig['header
 /**
  * Generate Option
  */
-export default interface ICurlizeOptions<T = unknown> {
+export interface ICurlizeOptions<T = unknown> {
   /**
    * prettify command. use newline charactor
    * */

@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios';
 
-export default function pickContentType(header: AxiosRequestConfig['headers']): string | undefined {
+export function pickContentType(header: AxiosRequestConfig['headers']): string | undefined {
   if (header?.['Content-Type'] != null) {
     return header['Content-Type'] as string;
   }

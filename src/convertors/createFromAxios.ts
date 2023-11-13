@@ -1,15 +1,15 @@
-import getBody from '#convertors//getBody';
-import getMethod from '#convertors/request-config/getMethod';
-import getUrl from '#convertors/request-config/getUrl';
-import generateBody from '#generators/generateBody';
-import generateHeader from '#generators/generateHeader';
-import generateQuerystring from '#generators/generateQuerystring';
-import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
-import getIndent from '#tools/getIndent';
-import getNewline from '#tools/getNewline';
+import { getBody } from '#/convertors//getBody';
+import { getMethod } from '#/convertors/request-config/getMethod';
+import { getUrl } from '#/convertors/request-config/getUrl';
+import { generateBody } from '#/generators/generateBody';
+import { generateHeader } from '#/generators/generateHeader';
+import { generateQuerystring } from '#/generators/generateQuerystring';
+import type { ICurlizeOptions } from '#/interfaces/ICurlizeOptions';
+import { getIndent } from '#/tools/getIndent';
+import { getNewline } from '#/tools/getNewline';
 import type { AxiosRequestConfig } from 'axios';
 
-export default function createFromAxios<T = unknown>(
+export function createFromAxios<T = unknown>(
   req: Pick<AxiosRequestConfig, 'url' | 'method' | 'headers' | 'data' | 'baseURL' | 'params'>,
   options: ICurlizeOptions<T>,
 ): string {
