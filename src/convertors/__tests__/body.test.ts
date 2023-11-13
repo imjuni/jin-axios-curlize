@@ -7,6 +7,7 @@ import type ICurlizeOptions from '#interfaces/ICurlizeOptions';
 import type { TBodyReplacerType } from '#interfaces/ICurlizeOptions';
 import pickContentType from '#tools/pickContentType';
 import NodeFormData from 'form-data';
+import { describe, expect, it } from 'vitest';
 
 // mockup Node v18 or Browser FormData
 // MDN: https://developer.mozilla.org/ko/docs/Web/API/FormData
